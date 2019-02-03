@@ -2,6 +2,7 @@
 # Copyright by Timur Batrutdinov
 
 from flask import Flask
+from parser import Parser
 import yaml
 import os
 
@@ -18,10 +19,12 @@ with open('config.yml', 'r') as file:
 #----------------------------------------------------------
 
 app = Flask(__name__)
+parser = Parser()
 
 @app.route('/')
 def info():
     db.Query("SELECT * FROM users")
+    print(parser.getOlympiadsList())
     return 'OlympiadNotifier Server'
 
 app.run(port=config['port'], debug=True)

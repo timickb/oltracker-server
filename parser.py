@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import yaml
+import requests
 
 class Parser:
     def __init__:
@@ -31,5 +32,10 @@ class Parser:
             'Technology': '%5B17%5D',
             'Psychology': '%5B28%5D'
         }
-    def getOlympiadsList(subject=0, period=0, class_):
-        url = [self.URL]
+    def getOlympiadsList(type_='any', subjects=[], period='year', period_date='', class_='any'):
+        url = self.URL + 'type={}&class={}&period={}&period_date={}'.format(type_, class_, period, period_date)
+        content = requests.get(url).text
+        soup = BeautifulSoup(content, 'html.parser')
+        return soup.prettify()
+
+        
