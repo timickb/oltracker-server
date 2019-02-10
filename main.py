@@ -1,8 +1,7 @@
 # OlympiadNotifier REST API source code
-# Copyright by Timur Batrutdinov
 
 from flask import Flask
-from parser import Parser
+from pillow import MoeObr
 import yaml
 import os
 
@@ -18,13 +17,13 @@ with open('config.yml', 'r') as file:
 
 #----------------------------------------------------------
 
-app = Flask(__name__)
-parser = Parser()
+#app = Flask(__name__)
 
-@app.route('/')
-def info():
-    db.Query("SELECT * FROM users")
-    print(parser.getOlympiadsList())
-    return 'OlympiadNotifier Server'
+parser = MoeObr()
+parser.getOlympiadsList()
 
-app.run(port=config['port'], debug=True)
+#@app.route('/')
+#def info():
+#    return 'OlympiadNotifier Server'
+#
+#app.run(port=config['port'])
