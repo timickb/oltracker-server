@@ -1,22 +1,40 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as bs
 import yaml
 import requests
 
 # TODO парсер для ресурса http://moeobrazovanie.ru
 class MoeObr():
     def __init__(self):
-        self.URL = 'https://moeobrazovanie.ru/olimpiady.php'
+        self.BASE_URL = 'https://moeobrazovanie.ru/olimpiady.php?predmet={}&klass={}&data={}&sort=date'
+        self.HEADERS = {
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        }
+        self.ITEMS_ON_PAGE = 20
     
-    def getOlympiadsList(self, subject=-1, class_=-1, date=-1):
-        url = self.URL + '?predmet={}&klass={}&data={}&sort=date'.format(subject, class_, date)
-        content = requests.get(url).text
-        soup = BeautifulSoup(content, 'html.parser')
-        events = []
-        events_raw = soup.find_all("div", "OSROlyRow")
-        for event in events_raw:
-            title = event.find("a", class_="ollyTtl")
-            events.append(title)
-        print(events)
+    def getList(self, subject=-1, class_=-1, date=-1):
+        # make url for this query
+        url = self.BASE_URL.format(subject, class_, date)
+
+        # make request
+        session = requests.Session()
+        request = session.get(url, headers=self.HEADERS)
+
+        if request.status_code == 200:
+            # if success, parse the result
+            soup = bs(request.content, 'html.parser')
+
+            # get an amount of found items
+            amount = int(soup.find('b', class_='ml10').text)
+            if amount == 0:
+                return '0'
+
+            # calculate number of pages
+            pages_amount = amount // self.ITEMS_ON_PAGE
+            if amount % self.ITEMS_ON_PAGE > 0:
+                pages_amount += 1
+        else:
+            return 'error'
 
 
 # TODO парсер для ресурса http://olimpiada.ru

@@ -1,7 +1,7 @@
 # OlympiadNotifier REST API source code
 
 from flask import Flask
-from pillow import MoeObr
+from parsers import MoeObr
 import yaml
 import os
 
@@ -20,7 +20,7 @@ with open('config.yml', 'r') as file:
 #app = Flask(__name__)
 
 parser = MoeObr()
-parser.getOlympiadsList()
+parser.getList()
 
 #@app.route('/')
 #def info():
