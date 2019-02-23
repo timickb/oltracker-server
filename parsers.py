@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup as bs
 import yaml
 import requests
-
+import re
 
 # TODO парсер для ресурса http://moeobrazovanie.ru
 class MoeObr():
@@ -37,17 +37,21 @@ class MoeObr():
             pages_amount = amount // self.ITEMS_ON_PAGE
             if amount % self.ITEMS_ON_PAGE > 0:
                 pages_amount += 1
-
+            
+            # get elements
             raw_elements = soup.find_all('div', class_='OSROlyRow')
             for i in range(len(raw_elements)):
                 result.append(self.getDictFromData(raw_elements[i]))
             
+
             # get other pages
             if pages_amount > 1:
                 for j in range(2, pages_amount+1):
+                    # make query for new page
                     url = self.BASE_URL.format(subject, class_, date, j)
                     request = session.get(url, headers=self.headers)
                     soup = bs(request.content, 'html.parser')
+                    # get elements
                     raw_elements = soup.find_all('div', class_='OSROlyRow')
                     for i in range(len(raw_elements)):
                         result.append(self.getDictFromData(raw_elements[i]))
@@ -56,23 +60,42 @@ class MoeObr():
             return 'error'
         return result
     
-    def getDictFromData(self, data):
-        # forming output data
-        result = {}
+    def get_subjects_from_string(self, string):
+        first = re.sub("^\s+|\n|\r|\s+$", '', string)
+        return first.split(', ')
 
-        # fetch a title
-        result['title'] = data.find('a', class_='olyTtl').text
+    def get_classes_from_string(self, string):
+        first = string.split(' | ')[0]
+        second = re.sub("^\s+|\n|\r|\s+$", '', first)
+        third = second.split(' классы')[0]
+        return third.split(', ')
+    
+    def getDictFromData(self, item):
+        olympiad = {}
 
-        #TODO: get detail information
-        # get info page
-        #page_url = self.SERVER + data.find('a')['href']
-        #request = requests.get(page_url, headers=self.headers)
-        #if request.status_code != 200:
-        #    return 'error'
-        #info_page = request.content
-        #soup = bs(request.content, 'html.parser')   
+        # parse title
+        title_obj = item.find('a', class_='olyTtl')
+        olympiad['title'] = title_obj.text
 
-        return result
+        # decompose rubbish
+        title_obj.decompose()
+        spans = item.find_all('span')
+        for span in spans:
+            span.decompose()
+
+        # parse organisators
+        #org = item.find('a', attrs={'target': '_blank'})
+        #olympiad['org'] = org.text
+
+        # decompose rubbish
+        item.find('div').decompose()
+
+        # parse subjects and classes
+        item_text = item.text.split(':')
+        olympiad['subjects'] = self.get_subjects_from_string(item_text[1])
+        olympiad['classes'] = self.get_classes_from_string(item_text[2])
+
+        return olympiad
 
 
 
