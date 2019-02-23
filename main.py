@@ -1,6 +1,6 @@
 # OlympiadNotifier REST API source code
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from parsers import MoeObr
 import yaml
 import os
@@ -28,7 +28,14 @@ def info():
 
 @app.route('/get')
 def get():
-    out = parser.getList()
+    class_ = request.args.get('class')
+    subject = request.args.get('subject')
+    date = request.args.get('date')
+
+    if class_== None: class_ = -1
+    if subject == None: subject = -1
+    if date == None: date = -1
+    out = parser.getList(class_=class_, subject=subject, date=date)
     return jsonify(out)
 
 app.run(port=config['port'])
