@@ -15,8 +15,24 @@ class MoeObr():
         self.ITEMS_ON_PAGE = 20
         self.info_table_rows = ['scale', 'level', 'type', 'classes', 'deadlines', 'subjects', 'places', 'rounds', 
         'awardee_def', 'privileges', 'registration', 'site', 'orgs']
+
+        self.subjects = {
+            "mathematics": "matematika",
+            "russian": "russkii_yazyk",
+            "informatics": "informatika",
+            "physics": "fizika",
+            "chemistry": "himiya",
+            "biology": "biologiya",
+            "social": "obschestvoznanie",
+            "literature": "literatura",
+            "geography": "geografiya",
+            "foreign": "inostrannyi_yazyk",
+            "art": "iskusstvo",
+            "economy": "ekonomika"
+        }
     
     def getList(self, subject=-1, class_=-1, date=-1):
+        subject = self.subjects[subject]
         result = []
         # make url for this query
         url = self.BASE_URL.format(subject, class_, date, 1)
