@@ -32,7 +32,7 @@ class MoeObr():
             "economy": "ekonomika"
         }
     
-    def getList(self, subject=-1, class_=-1, date=-1):
+    def getList(self, subject="all", class_=-1, date=-1):
         subject = self.subjects[subject]
         result = []
         # make url for this query

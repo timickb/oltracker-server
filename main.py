@@ -33,7 +33,7 @@ def get():
     date = request.args.get('date')
 
     if class_== None: class_ = -1
-    if subject == None: subject = -1
+    if subject == None: subject = "all"
     if date == None: date = -1
     out = parser.getList(class_=class_, subject=subject, date=date)
     return jsonify(out)
