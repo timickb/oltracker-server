@@ -17,7 +17,7 @@ class MoeObr():
         'awardee_def', 'privileges', 'registration', 'site', 'orgs']
 
         self.subjects = {
-            "all": "-1",
+            "all": -1,
             "mathematics": "matematika",
             "russian": "russkii_yazyk",
             "informatics": "informatika",
@@ -33,7 +33,10 @@ class MoeObr():
         }
     
     def getList(self, subject="all", class_=-1, date=-1):
-        subject = self.subjects[subject]
+        try:
+            subject = self.subjects[subject]
+        except:
+            subject = -1
         result = []
         # make url for this query
         url = self.BASE_URL.format(subject, class_, date, 1)
