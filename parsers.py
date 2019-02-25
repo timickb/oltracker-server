@@ -17,6 +17,7 @@ class MoeObr():
         'awardee_def', 'privileges', 'registration', 'site', 'orgs']
 
         self.subjects = {
+            "all": "-1",
             "mathematics": "matematika",
             "russian": "russkii_yazyk",
             "informatics": "informatika",
