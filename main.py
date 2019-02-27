@@ -36,6 +36,11 @@ def get():
     if subject == None: subject = "all"
     if date == None: date = -1
     out = parser.getList(class_=class_, subject=subject, date=date)
-    return jsonify(out)
+    if out == 0: 
+        answer = jsonify([])
+    else:
+        answer = jsonify(out)
+    print(answer)
+    return answer
 
 app.run(port=config['port'])

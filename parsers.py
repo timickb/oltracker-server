@@ -90,6 +90,27 @@ class MoeObr():
         third = second.split(' классы')[0]
         return third.split(', ')
     
+    def get_start_date_from_string(self, string):
+        first = string.split(' - ')
+        second = re.sub("^\s+|\n|\r|\s+$", '', first[0])
+        return second
+    
+    def get_end_date_from_string(self, string):
+        first = string.split(' - ')
+        second = re.sub("^\s+|\n|\r|\s+$", '', first[1])
+        return second
+    
+    def get_site_by_link(self, string):
+        html = requests.get(self.SERVER + string).content
+        soup = bs(html, 'html.parser')
+        table = soup.find('table', class_='oly_table')
+        table.find('table', class_='oly_search_block').decompose()
+
+        url = ''
+        links = table.find_all('a')
+        url = links[-2]['href']
+        return url
+    
     def getDictFromData(self, item):
         olympiad = {}
 
@@ -104,8 +125,10 @@ class MoeObr():
             span.decompose()
 
         # parse organisators
-        #org = item.find('a', attrs={'target': '_blank'})
-        #olympiad['org'] = org.text
+        orgs_raw = item.find_all('a')
+        orgs = []
+        for org in orgs_raw:
+            orgs.append(org.text)
 
         # decompose rubbish
         item.find('div').decompose()
@@ -114,10 +137,9 @@ class MoeObr():
         item_text = item.text.split(':')
         olympiad['subjects'] = self.get_subjects_from_string(item_text[1])
         olympiad['classes'] = self.get_classes_from_string(item_text[2])
+        olympiad['date_start'] =  self.get_start_date_from_string(item_text[3])
+        olympiad['date_end'] =  self.get_end_date_from_string(item_text[3])
+        olympiad['orgs'] = orgs
+        
 
         return olympiad
-
-
-
-parser = MoeObr()
-parser.getList()
