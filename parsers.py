@@ -32,7 +32,7 @@ class MoeObr():
             "economy": "ekonomika"
         }
     
-    def getList(self, subject="all", class_=-1, date=-1):
+    def get_list(self, subject="all", class_=-1, date=-1):
         try:
             subject = self.subjects[subject]
         except:

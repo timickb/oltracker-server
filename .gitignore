@@ -58,3 +58,5 @@ target/
 
 # Other files
 example.txt
+example.json
+database.json
