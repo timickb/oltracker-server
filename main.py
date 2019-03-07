@@ -1,7 +1,5 @@
-# OlympiadNotifier REST API source code
-
 from flask import Flask, jsonify, request
-from parsers import MoeObr
+from threading import Thread
 import yaml
 import os
 import json
@@ -18,13 +16,18 @@ with open('config.yml', 'r') as file:
 
 #----------------------------------------------------------
 
-app = Flask(__name__)
+def find_data(class_, subject, date):
+    with open('database.json', 'r', encoding='utf-8') as db:
+        data = json.load(db)
+        return data
 
-parser = MoeObr()
+#----------------------------------------------------------
+
+app = Flask(__name__)
 
 @app.route('/')
 def info():
-    return 'OlympiadNotifier Server'
+    return 'API for Olympiad Tracker'
 
 @app.route('/get')
 def get():
@@ -32,15 +35,9 @@ def get():
     subject = request.args.get('subject')
     date = request.args.get('date')
 
-    if class_== None: class_ = -1
-    if subject == None: subject = "all"
-    if date == None: date = -1
-    out = parser.getList(class_=class_, subject=subject, date=date)
-    if out == 0: 
-        answer = jsonify([])
-    else:
-        answer = jsonify(out)
-    print(answer)
+    answer = jsonify(find_data(class_, subject, date))
     return answer
+
+#----------------------------------------------------------
 
 app.run(port=config['port'])
