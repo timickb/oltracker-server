@@ -17,7 +17,6 @@ with open('config.yml', 'r') as file:
 #----------------------------------------------------------
 
 def find_data(class_, subject, date):
-<<<<<<< HEAD
     result = []
     db = open('database.json', 'r', encoding='utf-8')
     data = json.load(db)
@@ -31,11 +30,6 @@ def string_in_list(string, list0):
         if item == string:
             return True
     return False
-=======
-    with open('database.json', 'r', encoding='utf-8') as db:
-        data = json.load(db)
-        return data
->>>>>>> 55457e7269407e438bf5a10f3adaa7710b824528
 
 #----------------------------------------------------------
 
