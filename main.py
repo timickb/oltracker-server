@@ -62,4 +62,4 @@ def get():
     date = request.args.get('date')
     return jsonify(find_data(class_, subject, date))
 
-app.run(port=config['port'])
+app.run(host=config['host'], port=config['port'])
