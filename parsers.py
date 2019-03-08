@@ -61,7 +61,7 @@ class MoeObr():
             # get elements
             raw_elements = soup.find_all('div', class_='OSROlyRow')
             for i in range(len(raw_elements)):
-                result.append(self.getDictFromData(raw_elements[i]))
+                result.append(self.get_dict_from_data(raw_elements[i]))
             
 
             # get other pages
@@ -74,7 +74,7 @@ class MoeObr():
                     # get elements
                     raw_elements = soup.find_all('div', class_='OSROlyRow')
                     for i in range(len(raw_elements)):
-                        result.append(self.getDictFromData(raw_elements[i]))
+                        result.append(self.get_dict_from_data(raw_elements[i]))
             
         else:
             return 'error'
@@ -108,15 +108,24 @@ class MoeObr():
 
         url = ''
         links = table.find_all('a')
-        url = links[-2]['href']
+        print('='*30)
+        for link in links:
+            if link['href'].startswith('http://'):
+                url = link['href']
+                break
+        if url == '':
+            url = 'undefined'
         return url
     
-    def getDictFromData(self, item):
+    def get_dict_from_data(self, item):
         olympiad = {}
 
         # parse title
         title_obj = item.find('a', class_='olyTtl')
         olympiad['title'] = title_obj.text
+
+        #parse link
+        olympiad['link'] = self.get_site_by_link(title_obj['href'])
 
         # decompose rubbish
         title_obj.decompose()
@@ -141,5 +150,6 @@ class MoeObr():
         olympiad['date_end'] =  self.get_end_date_from_string(item_text[3])
         olympiad['orgs'] = orgs
         
+        print('Parsed:', olympiad['title'])
 
         return olympiad
