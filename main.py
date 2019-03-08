@@ -4,50 +4,62 @@ import yaml
 import os
 import json
 
-#----------------------------------------------------------
+# --import configs--
 
 config = None
-with open('config.yml', 'r') as file:
+with open('config.yml', 'r', encoding='utf-8') as file:
     try:
         config = yaml.load(file)
     except yaml.YAMLError as ex:
         print(ex)
         exit()
 
-#----------------------------------------------------------
+matches = None
+with open('matches.yml', 'r', encoding='utf-8') as file:
+    try:
+        matches = yaml.load(file)
+    except yaml.YAMLError as ex:
+        print(ex)
+        exit()
+
+# --important functions--
 
 def find_data(class_, subject, date):
     result = []
+    if class_ == -1: class_ = None
+    if subject == -1: subject = None
+    if date == -1: date = None
+
+    try:
+        subject = matches['subjects'][subject]
+    except:
+        subject = None
+    
+    try:
+        date = matches['months'][date]
+    except:
+        date = None
+
     db = open('database.json', 'r', encoding='utf-8')
     data = json.load(db)
     for item in data:
-        if (class_ in item['classes'] or class_ == None) and (string_in_list(subject, item['subjects']) or subject == None) and (date == item['date_start'] or date == None):
+        if (class_ in item['classes'] or class_ == None) and (subject in item['subjects'] or subject == None) and (date == item['date_start'] or date == None):
             result.append(item)
     return result
 
-def string_in_list(string, list0):
-    for item in list0:
-        if item == string:
-            return True
-    return False
-
-#----------------------------------------------------------
+# --HTTP server--
 
 app = Flask(__name__)
 
 @app.route('/')
 def info():
-    return 'API for Olympiad Tracker'
+    return config['name']
 
 @app.route('/get')
 def get():
     class_ = request.args.get('class')
     subject = request.args.get('subject')
     date = request.args.get('date')
-
-    answer = jsonify(find_data(class_, subject, date))
-    return answer
-
-#----------------------------------------------------------
+    return jsonify(find_data(class_, subject, date))
 
 app.run(port=config['port'])

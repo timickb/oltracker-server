@@ -1,2 +1,3 @@
+name: 'API for Olympiad Tracker'
 port: 80
 updateHour: 20
