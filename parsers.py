@@ -47,7 +47,7 @@ class MoeObr():
 
         if request.status_code == 200:
             # if success, parse the result
-            soup = bs(request.content, 'html.parser')
+            soup = bs(request.content, 'html.parser', from_encoding='utf-8')
 
             # get an amount of found items
             amount = int(soup.find('b', class_='ml10').text)

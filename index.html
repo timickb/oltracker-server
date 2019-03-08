@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body {
+            background: rgb(245, 245, 245);
+            color: rgb(30, 30, 30);
+            font-family: 'Calibri Light', 'Segoe UI', sans-serif
+        }
+        h1 {
+            font-size: 28pt;
+            padding-left: 10px;
+            padding: 28px;
+            background: rgb(30, 30, 30);
+            color: rgb(245, 245, 245);
+            margin: -8px;
+
+        }
+        .function {
+            padding: 10px;
+            margin: 15px;
+            font-size: 20pt;
+        }
+        .instruction {
+            margin: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 11px;
+        }
+    </style>
+    <title>API for Olympiad Tracker</title>
+</head>
+<body>
+    <h1>API for Olympiad Tracker</h1>
+    <div class="function">
+        <b>Получить список предстоящих олимпиад:</b><br>
+        <code>/get?class={класс}&date={месяц}&subject={предмет}</code>
+        <div class="instruction">
+            <b>Предметы:</b>
+            <ul>
+                <li>mathematics (Математика)</li>
+                <li>informatics (Информатика)</li>
+                <li>russian (Русский язык)</li>
+                <li>physics (Физика)</li>
+                <li>chemistry (Химия)</li>
+                <li>biology (Биология)</li>
+                <li>social (Обществознание)</li>
+                <li>literature (Литература)</li>
+                <li>geography (География)</li>
+                <li>foreign (Иностранный язык)</li>
+                <li>art (Искусство)</li>
+                <li>economy (Экономика)</li>
+            </ul>
+        </div>
+        <div class="instruction">
+                <b>Месяцы:</b>
+                <ul>
+                    <li>january (Январь)</li>
+                    <li>february (Февраль)</li>
+                    <li>march (Март)</li>
+                    <li>april (Апрель)</li>
+                    <li>may (Май)</li>
+                    <li>june (Июнь)</li>
+                    <li>july (Июль)</li>
+                    <li>august (Август)</li>
+                    <li>september (Сентябрь)</li>
+                    <li>october (Октябрь)</li>
+                    <li>november (Ноябрь)</li>
+                    <li>december (Декабрь)</li>
+                </ul>
+        </div>
+        <div class="instruction">
+                <b>Классы:</b> 5, 6, 7, 8, 9, 10, 11
+        </div>
+    </div>
+</body>
+</html>

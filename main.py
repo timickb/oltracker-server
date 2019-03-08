@@ -53,7 +53,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def info():
-    return config['name']
+    html = open('index.html', 'r', encoding='utf-8').read()
+    return html
 
 @app.route('/get')
 def get():

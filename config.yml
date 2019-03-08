@@ -1,4 +1,5 @@
 name: 'API for Olympiad Tracker'
+instruction: '/get?class={класс}&date={месяц}&subject={предмет} - получить список олимпиад'
 host: '0.0.0.0'
 port: 80
 updateHour: 20
