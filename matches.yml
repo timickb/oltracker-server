@@ -12,19 +12,19 @@ subjects-mo:
   art: 'Искусство'
   economy: 'Экономика'
 
-  subjects:
-    mathematics: 'Математика'
-    informatics: 'Информатика'
-    russian: 'Русский язык'
-    physics: 'Физика'
-    chemistry: 'Химия'
-    biology: 'Биология'
-    social: 'Обществознание'
-    literature: 'Литература'
-    geography: 'География'
-    foreign: 'Лингвистика'
-    art: 'Искусство'
-    economy: 'Экономика'
+subjects:
+  mathematics: 'Математика'
+  informatics: 'Информатика'
+  russian: 'Русский язык'
+  physics: 'Физика'
+  chemistry: 'Химия'
+  biology: 'Биология'
+  social: 'Обществознание'
+  literature: 'Литература'
+  geography: 'География'
+  foreign: 'Лингвистика'
+  art: 'Искусство'
+  economy: 'Экономика'
   
 subjects-olru:
   mathematics: 6

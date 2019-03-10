@@ -99,7 +99,13 @@ def getCurrent():
     schclass = request.args.get('class')
     subject = request.args.get('subject')
     oltype = request.args.get('type')
-    print(schclass, subject, oltype)
     return jsonify(find_data_current(schclass, subject, oltype))
 
-app.run(host=config['host'], port=config['port'], debug=True)
+
+debug = config['debug']
+if debug == 'True' or debug == 'true' or debug == 'on' or debug > 0:
+    debug = True
+else:
+    debug = False
+
+app.run(host=config['host'], port=config['port'], debug=debug)
