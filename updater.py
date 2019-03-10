@@ -16,7 +16,7 @@ parser = MoeObr()
 parser1 = OlympiadaRu()
 
 while(True):
-    if (datetime.now().hour == config['updateHour'] or True) and (last_update_day != datetime.now().day):
+    if (datetime.now().hour == config['updateHour']) and (last_update_day != datetime.now().day):
         print('Fetching data...')
         last_update_day = datetime.now().day
         #data_next = parser.get_list()

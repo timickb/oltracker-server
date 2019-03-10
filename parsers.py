@@ -49,8 +49,8 @@ class OlympiadaRu():
 
         data = soup.find('div', class_='main')
         deadlines_raw = data.find('font')
-        date_start = deadlines_raw.text.split(' - ')[0]
-        date_end = deadlines_raw.text.split(' - ')[1]
+        result['date_start'] = deadlines_raw.text.split(' - ')[0]
+        result['date_end'] = deadlines_raw.text.split(' - ')[1]
         info_table = data.find('table', class_='event_info_table')
         info_table_rows = info_table.find_all('tr')
         for item in info_table_rows:
