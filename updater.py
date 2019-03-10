@@ -1,5 +1,5 @@
 from datetime import datetime
-from parsers import MoeObr, OlympiadaRu
+from parsers import OlympiadaRu
 import json
 import yaml
 
@@ -12,17 +12,18 @@ with open('config.yml', 'r') as file:
         exit()
 
 last_update_day = None
-parser = MoeObr()
-parser1 = OlympiadaRu()
+parser = OlympiadaRu()
 
 while(True):
     if (datetime.now().hour == config['updateHour']) and (last_update_day != datetime.now().day):
         print('Fetching data...')
         last_update_day = datetime.now().day
-        data_next = parser.get_list()
-        data_current = parser1.get_current_events()
+
+        data_next = parser.get_next_events()
         with open('database_next.json', 'w', encoding='utf-8') as db:
             json.dump(data_next, db, ensure_ascii=False)
+
+        data_current = parser.get_current_events()
         with open('database_current.json', 'w', encoding='utf-8') as db:
             json.dump(data_current, db, ensure_ascii=False)
             
