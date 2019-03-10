@@ -1,4 +1,4 @@
-subjects:
+subjects-mo:
   mathematics: 'Математика'
   informatics: 'Информатика и ИКТ'
   russian: 'Русский язык'
@@ -11,6 +11,40 @@ subjects:
   foreign: 'Иностранный язык'
   art: 'Искусство'
   economy: 'Экономика'
+
+  subjects:
+    mathematics: 'Математика'
+    informatics: 'Информатика'
+    russian: 'Русский язык'
+    physics: 'Физика'
+    chemistry: 'Химия'
+    biology: 'Биология'
+    social: 'Обществознание'
+    literature: 'Литература'
+    geography: 'География'
+    foreign: 'Лингвистика'
+    art: 'Искусство'
+    economy: 'Экономика'
+  
+subjects-olru:
+  mathematics: 6
+  informatics: 7
+  russian: 1
+  physics: 12
+  chemistry: 13
+  biology: 11
+  social: 9
+  literature: 2
+  geography: 10
+  foreign: 24
+  art: 18
+  economy: 14
+  '-1': '%'
+
+types-olru:
+  extramural: 2
+  registration: 1
+  '-1': '%'
 
 months:
   january: 'Январь'
@@ -25,16 +59,3 @@ months:
   october: 'Октябрь'
   november: 'Ноябрь'
   december: 'Декабрь'
-months-num:
-  '0': 'Январь'
-  '1': 'Февраль'
-  '2': 'Март'
-  '3': 'Апрель'
-  '4': 'Май'
-  '5': 'Июнь'
-  '6': 'Июль'
-  '7': 'Август'
-  '8': 'Сентябрь'
-  '9': 'Октябрь'
-  '10': 'Ноябрь'
-  '11': 'Декабрь'

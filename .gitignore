@@ -59,5 +59,6 @@ target/
 # Other files
 example.txt
 example.json
-database.json
+database_next.json
+database_current.json
 test.py
