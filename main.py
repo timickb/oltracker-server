@@ -34,7 +34,7 @@ def ban_ip(ip):
     f.close()
     print('Banned IP: ' + str(ip))
 
-def find_data_next(schclass, subject, oltype):
+def find_data_next(schclass, subject, stage):
     result = []
     try:
         schclass = int(schclass)
@@ -45,8 +45,8 @@ def find_data_next(schclass, subject, oltype):
     except:
         subject = -1
     
-    if oltype not in matches['types-olru']:
-        oltype = -1
+    if stage != 'final' and stage != 'selection':
+        stage = -1
     
     if (schclass not in range(5, 12)) and schclass != -1:
         return result
@@ -60,12 +60,12 @@ def find_data_next(schclass, subject, oltype):
             isClass = schclass in item['classes'] or schclass == -1
         except:
             isClass = False
-        if (isClass) and (subject in item['subjects'] or subject == -1):
+        if (isClass) and (subject in item['subjects'] or subject == -1) and (stage == item['stage'] or stage == -1):
             result.append(item)
 
     return result
 
-def find_data_current(schclass, subject, oltype):
+def find_data_current(schclass, subject, stage):
     result = []
     try:
         schclass = int(schclass)
@@ -76,9 +76,9 @@ def find_data_current(schclass, subject, oltype):
     except:
         subject = -1
     
-    if oltype not in matches['types-olru']:
-        oltype = -1
-    
+    if stage != 'final' and stage != 'selection':
+        stage = -1
+
     if (schclass not in range(5, 12)) and schclass != -1:
         return result
     
@@ -91,7 +91,7 @@ def find_data_current(schclass, subject, oltype):
             isClass = schclass in item['classes'] or schclass == -1
         except:
             isClass = False
-        if (isClass) and (subject in item['subjects'] or subject == -1):
+        if (isClass) and (subject in item['subjects'] or subject == -1) and (stage == item['stage'] or stage == -1):
             result.append(item)
 
     return result
@@ -130,15 +130,15 @@ def info():
 def get():
     schclass = request.args.get('class')
     subject = request.args.get('subject')
-    oltype = request.args.get('type')
-    return jsonify(find_data_next(schclass, subject, oltype))
+    stage = request.args.get('stage')
+    return jsonify(find_data_next(schclass, subject, stage))
 
 @app.route('/getCurrent')
 def getCurrent():
     schclass = request.args.get('class')
     subject = request.args.get('subject')
-    oltype = request.args.get('type')
-    return jsonify(find_data_current(schclass, subject, oltype))
+    stage = request.args.get('stage')
+    return jsonify(find_data_current(schclass, subject, stage))
 
 
 debug = config['debug']
