@@ -24,6 +24,16 @@ with open('matches.yml', 'r', encoding='utf-8') as file:
 
 # --important functions--
 
+def ban_ip(ip):
+    f = open('banned_ips.json', 'r', encoding='utf-8')
+    data = json.load(f)
+    data.append(ip)
+    f.close()
+    f = open('banned_ips.json', 'w', encoding='utf-8')
+    json.dump(data, f)
+    f.close()
+    print('Banned IP: ' + str(ip))
+
 def find_data_next(schclass, subject, oltype):
     result = []
     try:
@@ -91,6 +101,26 @@ def find_data_current(schclass, subject, oltype):
 
 app = Flask(__name__)
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    url = request.url
+    try:
+        f = open('banned_ips.json', 'r', encoding='utf-8')
+        banned_list = json.load(f)
+    except:
+        banned_list = []
+
+    if request.remote_addr in banned_list:
+        return 'Your IP is banned'
+    if 'php' in request.url:
+        ban_ip(request.remote_addr)
+    return 'Not found'
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return 'Not found'
+    
 @app.route('/')
 def info():
     html = open('index.html', 'r', encoding='utf-8').read()

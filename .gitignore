@@ -61,4 +61,5 @@ example.txt
 example.json
 database_next.json
 database_current.json
+banned_ips.json
 test.py
