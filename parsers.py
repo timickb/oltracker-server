@@ -13,6 +13,7 @@ class OlympiadaRu():
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         }
         self.NUMBERS = ['first', 'second', 'third', 'forth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
+        self.KEYWORDS = ['финал', 'Финал', 'Заключительн', 'заключительн']
         with open('matches.yml', 'r', encoding='utf-8') as file:
             try:
                 matches = yaml.load(file)
@@ -27,6 +28,13 @@ class OlympiadaRu():
         link_raw = row.find_all('td')[1].find('a')
         url = self.SERVER + link_raw['href']
         result['title'] = link_raw.text
+
+        result['stage'] = 'selection'
+        for keyword in self.KEYWORDS:
+            if keyword in result['title']:
+                result['stage'] = 'final'
+                break
+
         subjects_raw = row.find('div', class_='div_selected_subjects')
         subjects = []
         if subjects_raw != None:
