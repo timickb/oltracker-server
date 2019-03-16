@@ -60,7 +60,11 @@ def find_data_next(schclass, subject, stage):
             isClass = schclass in item['classes'] or schclass == -1
         except:
             isClass = False
-        if (isClass) and (subject in item['subjects'] or subject == -1) and (stage == item['stage'] or stage == -1):
+        try:
+            isStage = stage == item['stage'] or stage == -1
+        except:
+            stage = True
+        if (isClass) and (subject in item['subjects'] or subject == -1) and (isStage):
             result.append(item)
 
     return result
