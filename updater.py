@@ -3,6 +3,8 @@ from parsers import OlympiadaRu
 import json
 import yaml
 
+r = input('Flag: ')
+
 config = None
 with open('config.yml', 'r') as file:
     try:
@@ -15,7 +17,7 @@ last_update_day = None
 parser = OlympiadaRu()
 
 while(True):
-    if (datetime.now().hour == config['updateHour']) and (last_update_day != datetime.now().day):
+    if ((datetime.now().hour == config['updateHour']) and (last_update_day != datetime.now().day)) or r == 'Now':
         print('Fetching data...')
         last_update_day = datetime.now().day
 
