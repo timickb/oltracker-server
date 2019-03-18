@@ -37,7 +37,7 @@
     <h1>API for Olympiad Tracker</h1>
     <div class="function">
         <b>Получить список предстоящих событий:</b><br>
-        <code>/getNext?class={класс}&date={месяц}&subject={предмет}</code>
+        <code>/getNext?class={класс}&stage={этап}&subject={предмет}</code>
         <div class="instruction">
             <b>Предметы:</b>
             <ul>
@@ -57,21 +57,11 @@
             </ul>
         </div>
         <div class="instruction">
-                <b>Месяцы:</b>
+                <b>Этапы:</b>
                 <ul>
-                    <li>january (Январь)</li>
-                    <li>february (Февраль)</li>
-                    <li>march (Март)</li>
-                    <li>april (Апрель)</li>
-                    <li>may (Май)</li>
-                    <li>june (Июнь)</li>
-                    <li>july (Июль)</li>
-                    <li>august (Август)</li>
-                    <li>september (Сентябрь)</li>
-                    <li>october (Октябрь)</li>
-                    <li>november (Ноябрь)</li>
-                    <li>december (Декабрь)</li>
-                    <li>-1 (Любой месяц)</li>
+                    <li>selection (Отборочный этап)</li>
+                    <li>final (Заключительный этап)</li>
+                    <li>-1 (Любой этап)</li>
                 </ul>
         </div>
         <div class="instruction">
@@ -80,7 +70,7 @@
     </div>
     <div class="function">
         <b>Получить список текущих событий:</b><br>
-        <code>/getCurrent?class={класс}&subject={предмет}</code>
+        <code>/getCurrent?class={класс}&stage={этап}&subject={предмет}</code>
         <div class="instruction">
             <b>Предметы:</b>
             <ul>
@@ -97,6 +87,14 @@
                 <li>art (Искусство)</li>
                 <li>economy (Экономика)</li>
                 <li>-1 (Любой предмет)</li>
+            </ul>
+        </div>
+        <div class="instruction">
+            <b>Этапы:</b>
+            <ul>
+                <li>selection (Отборочный этап)</li>
+                <li>final (Заключительный этап)</li>
+                <li>-1 (Любой этап)</li>
             </ul>
         </div>
         <div class="instruction">
