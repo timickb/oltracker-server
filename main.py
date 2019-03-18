@@ -117,9 +117,10 @@ def catch_all(path):
         banned_list = []
 
     if request.remote_addr in banned_list:
-        return 'Your IP is banned'
+        return 'what are you doing little hacker?'
     if 'php' in request.url:
         ban_ip(request.remote_addr)
+        return 'what are you doing little hacker?'
     return 'Not found'
 
 @app.errorhandler(404)
