@@ -14,6 +14,7 @@ class OlympiadaRu():
         }
         self.NUMBERS = ['first', 'second', 'third', 'forth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
         self.KEYWORDS = ['финал', 'Финал', 'Заключительн', 'заключительн']
+        self.TYPEWORDS  = ['очная', 'личная', 'конференция', 'заочная', 'все типы']
         with open('matches.yml', 'r', encoding='utf-8') as file:
             try:
                 matches = yaml.load(file)
@@ -48,6 +49,13 @@ class OlympiadaRu():
             except:
                 subjects.append(row.find_all('td')[1].text.split(' | ')[1])
         result['subjects'] = subjects
+
+        if 'тип' in result['subjects'][0]:
+            result['subjects'] = []
+            for typeword in self.TYPEWORDS:
+                if typeword in result['subjects']:
+                    subjects.append[typeword]
+
 
         eventID = int(link_raw['href'].split('/')[-1])
         result['id'] = eventID
