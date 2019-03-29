@@ -62,7 +62,7 @@ class OlympiadaRu():
         result['infourl'] = url
 
         print('='*30)
-        print('Parsing event ' + str(eventID))
+        print('Parsing event ' + str(eventID) + ', ' + url)
 
         request = requests.get(url, headers=self.HEADERS)
         soup = bs(request.content, 'html.parser', from_encoding='utf-8')
@@ -79,7 +79,11 @@ class OlympiadaRu():
         for item in info_table_rows:
             name = item.find_all('td')[0].text
             if name == 'Классы':
-                classes_raw = item.find_all('td')[1].text.split('-')
+                classes_raw = item.find_all('td')[1].text
+                if ',' in classes_raw:
+                	classes_raw = classes_raw.split(',')
+                else:
+                	classes_raw = classes_raw.split('-')
                 classes = []
                 for i in range(int(classes_raw[0]), int(classes_raw[-1])+1):
                     classes.append(i)
