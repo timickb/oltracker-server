@@ -55,6 +55,8 @@ class OlympiadaRu():
             for typeword in self.TYPEWORDS:
                 if typeword in result['subjects']:
                     subjects.append[typeword]
+        if len(subjects) == 0:
+            subjects.append('Любой предмет')
 
 
         eventID = int(link_raw['href'].split('/')[-1])
