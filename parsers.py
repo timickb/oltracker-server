@@ -48,9 +48,6 @@ class OlympiadaRu():
                 subjects.append(subjects_raw.text.split(' | ')[2])
             except:
                 subjects.append(row.find_all('td')[1].text.split(' | ')[1])
-
-        if len(subjects) == 0:
-            subjects.append('Любой предмет')
         
         result['subjects'] = subjects
 
@@ -59,6 +56,9 @@ class OlympiadaRu():
             for typeword in self.TYPEWORDS:
                 if typeword in result['subjects']:
                     subjects.append[typeword]
+        
+        if len(result['subjects']) == 0:
+            result['subjects'].append('Любой предмет')
 
 
         eventID = int(link_raw['href'].split('/')[-1])

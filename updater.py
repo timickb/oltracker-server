@@ -15,9 +15,10 @@ with open('config.yml', 'r') as file:
 
 last_update_day = None
 parser = OlympiadaRu()
-
+fetched = False
 while(True):
-    if ((datetime.now().hour == config['updateHour']) and (last_update_day != datetime.now().day)) or r == 'Now':
+    if ((datetime.now().hour == config['updateHour']) and (last_update_day != datetime.now().day)) or r == 'Now' and not fetched:
+        fetched = True
         print('Fetching data...')
         last_update_day = datetime.now().day
 
