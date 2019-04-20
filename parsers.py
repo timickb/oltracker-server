@@ -49,15 +49,16 @@ class OlympiadaRu():
             except:
                 subjects.append(row.find_all('td')[1].text.split(' | ')[1])
 
+        if len(subjects) == 0:
+            subjects.append('Любой предмет')
+        
+        result['subjects'] = subjects
+
         if 'тип' in result['subjects'][0]:
             result['subjects'] = []
             for typeword in self.TYPEWORDS:
                 if typeword in result['subjects']:
                     subjects.append[typeword]
-        if len(subjects) == 0:
-            subjects.append('Любой предмет')
-        
-        result['subjects'] = subjects
 
 
         eventID = int(link_raw['href'].split('/')[-1])
