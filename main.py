@@ -1,10 +1,19 @@
 from flask import Flask, jsonify, request, logging
-from threading import Thread
+from database import Database
 import yaml
 import os
 import json
 
 # --import configs--
+
+KEY = ""
+try:
+    with open('keys.json', 'r') as file:
+        data = json.load(file)
+        KEY = data['api']
+except:
+    print('Error: file with API keys was not found.')
+    exit(0)
 
 config = None
 with open('config.yml', 'r', encoding='utf-8') as file:
@@ -12,7 +21,7 @@ with open('config.yml', 'r', encoding='utf-8') as file:
         config = yaml.load(file)
     except yaml.YAMLError as ex:
         print(ex)
-        exit()
+        exit(0)
 
 matches = None
 with open('matches.yml', 'r', encoding='utf-8') as file:
@@ -20,7 +29,14 @@ with open('matches.yml', 'r', encoding='utf-8') as file:
         matches = yaml.load(file)
     except yaml.YAMLError as ex:
         print(ex)
-        exit()
+        exit(0)
+
+# --initializing database--
+try:
+    db = Database()
+except:
+    print('Error: couldn\'t initialize database.')
+    exit(0)
 
 # --important functions--
 
@@ -145,6 +161,22 @@ def getCurrent():
     subject = request.args.get('subject')
     stage = request.args.get('stage')
     return jsonify(find_data_current(schclass, subject, stage))
+
+@app.route('/updateUser', methods=['POST'])
+def updateUser():
+    api_key = request.data['key']
+    if api_key != KEY:
+        return 'Invalid key'
+
+    user_token = request.data['token']
+    subject = request.data['subject']
+    flag = request.data['flag']
+
+    db.update_data(user_token, subject, flag)
+
+    return 'ok'
+
+
 
 
 debug = config['debug']

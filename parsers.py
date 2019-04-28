@@ -55,7 +55,7 @@ class OlympiadaRu():
             result['subjects'] = []
             for typeword in self.TYPEWORDS:
                 if typeword in result['subjects']:
-                    subjects.append[typeword]
+                    subjects.append(typeword)
         
         if len(result['subjects']) == 0:
             result['subjects'].append('Любой предмет')
