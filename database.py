@@ -5,9 +5,7 @@ class Database():
         self.conn = sqlite3.connect('user.db')
         self.cursor = self.conn.cursor()
         try:
-            self.cursor.execute("""CREATE TABLE interests
-                    (user_token text, subject text)
-                """)
+            self.cursor.execute("CREATE TABLE interests (user_token text, subject text)")
         except:
             print('Database table already exists, skipping creation')
     

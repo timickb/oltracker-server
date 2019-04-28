@@ -40,16 +40,6 @@ except:
 
 # --important functions--
 
-def ban_ip(ip):
-    f = open('banned_ips.json', 'r', encoding='utf-8')
-    data = json.load(f)
-    data.append(ip)
-    f.close()
-    f = open('banned_ips.json', 'w', encoding='utf-8')
-    json.dump(data, f)
-    f.close()
-    print('Banned IP: ' + str(ip))
-
 def find_data_next(schclass, subject, stage):
     result = []
     try:
@@ -125,17 +115,8 @@ app = Flask(__name__)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    url = request.url
-    try:
-        f = open('banned_ips.json', 'r', encoding='utf-8')
-        banned_list = json.load(f)
-    except:
-        banned_list = []
-
-    if request.remote_addr in banned_list:
-        return 'what are you doing little hacker?'
+    # just protection
     if 'php' in request.url:
-        ban_ip(request.remote_addr)
         return 'what are you doing little hacker?'
     return 'Not found'
 
@@ -176,8 +157,7 @@ def updateUser():
 
     return 'ok'
 
-
-
+# --server startup--
 
 debug = config['debug']
 if debug == 'True' or debug == 'true' or debug == 'on' or debug > 0:
