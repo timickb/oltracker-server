@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup as bs
 import yaml
 import requests
-import re
 
 class OlympiadaRu():
     def __init__(self):

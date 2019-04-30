@@ -145,13 +145,13 @@ def getCurrent():
 
 @app.route('/updateUser', methods=['POST'])
 def updateUser():
-    api_key = request.data['key']
+    api_key = request.body['key']
     if api_key != KEY:
         return 'Invalid key'
 
-    user_token = request.data['token']
-    subject = request.data['subject']
-    flag = request.data['flag']
+    user_token = request.body['token']
+    subject = request.body['subject']
+    flag = request.body['flag']
 
     db.update_data(user_token, subject, flag)
 
