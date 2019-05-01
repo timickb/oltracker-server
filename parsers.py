@@ -22,12 +22,11 @@ class OlympiadaRu():
                 self.SUBJECTS = matches['subjects-olru']
                 self.TYPES = matches['types-olru']
             except:
-                print('Ooops...')
-                exit(1)
+                raise
         try:
             self.mservice = MessagingService()
         except:
-            print('Can\'t start messaging service. Skip it.')
+            raise
     
     def handle_event(self, row):
         result = {}
@@ -104,7 +103,7 @@ class OlympiadaRu():
         #-- check if this event is new
         event_day = result['date_start'].split('.')[0]
         event_month = result['date_start'].split('.')[1]
-        if (event_day == datetime.now().day) and (event_month == datetime.now().month) or True:
+        if (event_day == datetime.now().day) and (event_month == datetime.now().month):
             self.mservice.send_event_notifications(result['subjects'], url)
         return result
 
@@ -138,7 +137,6 @@ class OlympiadaRu():
 
             if counter != None:
                 pages_amount = int(counter.find_all('li')[-2].find('a').text)
-                print(pages_amount)
                 for i in range(2, pages_amount+1):
                     url = self.BASE_URL_NEXT.format(i, self.SUBJECTS[str(subject)], schclass, self.TYPES['-1'])
                     request = session.get(url, headers=self.HEADERS)

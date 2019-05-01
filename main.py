@@ -1,8 +1,17 @@
+# -*- coding: utf-8 -*-
+
 from flask import Flask, jsonify, request, logging
 from database import Database
+from datetime import datetime
 import yaml
 import os
 import json
+import logging
+
+# --start logger--
+filename = 'logs/serverLog' + str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
+logging.basicConfig(filename=filename, level=logging.DEBUG, format='%(asctime)s [%(levelname)s]: %(message)s')
+logging.info("Starting Olympiad Tracker API")
 
 # --import configs--
 
@@ -12,15 +21,17 @@ try:
         data = json.load(file)
         KEY = data['api']
 except:
-    print('Error: file with API keys was not found.')
+    logging.critical('File with API keys was not found, shutdown server')
     exit(0)
+logging.info("API key was loaded")
 
 config = None
 with open('config.yml', 'r', encoding='utf-8') as file:
     try:
         config = yaml.load(file)
     except yaml.YAMLError as ex:
-        print(ex)
+        logging.critical(ex)
+        logging.critical('Can not load config.yml, shutdown server')
         exit(0)
 
 matches = None
@@ -28,15 +39,19 @@ with open('matches.yml', 'r', encoding='utf-8') as file:
     try:
         matches = yaml.load(file)
     except yaml.YAMLError as ex:
-        print(ex)
+        logging.critical(ex)
+        logging.critical('Can not load matches.yml, shutdown server')
         exit(0)
+logging.info("Config was loaded")
 
 # --initializing database--
 try:
     db = Database()
 except:
-    print('Error: couldn\'t initialize database.')
+    logging.critical('Can not initialize database, shutdown server')
     exit(0)
+
+logging.info("Connected to database")
 
 # --important functions--
 
@@ -109,6 +124,7 @@ def find_data_current(schclass, subject, stage):
 
 
 # --HTTP server--
+logging.info("Starting HTTP server...")
 
 app = Flask(__name__)
 
@@ -165,4 +181,5 @@ if debug == 'True' or debug == 'true' or debug == 'on' or debug > 0:
 else:
     debug = False
 
+logging.info("HTTP Server started")
 app.run(host=config['host'], port=config['port'], debug=debug)

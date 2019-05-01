@@ -2,6 +2,12 @@ from datetime import datetime
 from parsers import OlympiadaRu
 import json
 import yaml
+import logging
+
+# --start logger--
+filename = 'logs/updaterLog' + str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
+logging.basicConfig(filename=filename, level=logging.DEBUG, format='%(asctime)s [%(levelname)s]: %(message)s')
+logging.info("Starting Updater")
 
 r = input('Flag: ')
 
@@ -14,12 +20,15 @@ with open('config.yml', 'r') as file:
         exit()
 
 last_update_day = None
-parser = OlympiadaRu()
+try:
+    parser = OlympiadaRu()
+except:
+    logging.critical("Can not start parser, shutdown updater")
 fetched = False
 while(True):
     if ((datetime.now().hour == config['updateHour']) and (last_update_day != datetime.now().day)) or r == 'Now' and not fetched:
         fetched = True
-        print('Fetching data...')
+        logging.info('Fetching data...')
         last_update_day = datetime.now().day
 
         data_next = parser.get_next_events()
@@ -30,4 +39,4 @@ while(True):
         with open('database_current.json', 'w', encoding='utf-8') as db:
             json.dump(data_current, db, ensure_ascii=False)
             
-        print('Information updated.')
+        logging.info('Information updated.')

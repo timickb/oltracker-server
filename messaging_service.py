@@ -1,6 +1,7 @@
 import requests
 import json
 import yaml
+import logging
 from database import Database
 
 class MessagingService():
@@ -12,7 +13,6 @@ class MessagingService():
                 data = json.load(f)
                 self.KEY = data['fcm']
         except:
-            print('Error: file with API keys was not found.')
             raise
         
         self.config = None
@@ -20,7 +20,6 @@ class MessagingService():
             try:
                 self.config = yaml.load(file)
             except:
-                print('Error: config file was not found')
                 raise
         
         self.matches = None
@@ -28,7 +27,6 @@ class MessagingService():
             try:
                 self.matches = yaml.load(file)
             except:
-                print('Error: matches file was not found')
                 raise
         
         self.db = Database()
@@ -60,7 +58,3 @@ class MessagingService():
         }
         res = requests.post(self.URL, json=payload, headers=headers)
         print("[Messaging Service] Notification was sent to '{}' with code {}".format(user_token, res.status_code))
-
-
-
-
