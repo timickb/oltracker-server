@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup as bs
 import yaml
 import requests
+from datetime import datetime
+from messaging_service import MessagingService
 
 class OlympiadaRu():
     def __init__(self):
@@ -22,6 +24,10 @@ class OlympiadaRu():
             except:
                 print('Ooops...')
                 exit(1)
+        try:
+            self.mservice = MessagingService()
+        except:
+            print('Can\'t start messaging service. Skip it.')
     
     def handle_event(self, row):
         result = {}
@@ -73,6 +79,7 @@ class OlympiadaRu():
         data = soup.find('div', class_='main')
         deadlines_raw = data.find('font')
         result['date_start'] = deadlines_raw.text.split(' - ')[0]
+
         try:
             result['date_end'] = deadlines_raw.text.split(' - ')[1]
         except:
@@ -94,6 +101,11 @@ class OlympiadaRu():
             elif name == 'Ссылка':
                 result['link'] = item.find_all('td')[1].find('a')['href']
         
+        #-- check if this event is new
+        event_day = result['date_start'].split('.')[0]
+        event_month = result['date_start'].split('.')[1]
+        if (event_day == datetime.now().day) and (event_month == datetime.now().month) or True:
+            self.mservice.send_event_notifications(result['subjects'], url)
         return result
 
 

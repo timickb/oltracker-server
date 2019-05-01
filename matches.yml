@@ -25,6 +25,24 @@ subjects:
   foreign: 'Лингвистика'
   art: 'Искусство'
   economy: 'Экономика'
+
+subjects-reversed:
+  'Математика': 'mathematics'
+  'Информатика': 'informatics'
+  'Русский язык': 'russian'
+  'Физика': 'physics'
+  'Химия': 'chemistry'
+  'Биология': 'biology'
+  'Обществознание': 'social'
+  'Литература': 'literature'
+  'География': 'geography'
+  'Лингвистика': 'foreign'
+  'Искусство': 'art'
+  'Экономика': 'economy'
+  'История': 'history'
+  'Робототехника': 'robotics'
+  'Любой предмет': '-1'
+  'Астрономия': 'astronomy'
   
 subjects-olru:
   mathematics: 6
