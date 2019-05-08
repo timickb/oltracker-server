@@ -139,7 +139,7 @@ def catch_all(path):
 @app.route('/updateUser', methods=['POST'])
 def updateUser():
     data = request.get_json()
-    logging.info("Received data: " + data)
+    logging.info("Received data: " + json.dumps(data))
     key = data['key']
     token = data['token']
     subject = data['subject']
