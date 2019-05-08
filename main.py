@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from flask import Flask, jsonify, request, logging
@@ -12,7 +13,6 @@ import logging
 filename = 'logs/serverLog' + str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
 logging.basicConfig(filename=filename, level=logging.DEBUG, format='%(asctime)s [%(levelname)s]: %(message)s')
 logging.info("Starting Olympiad Tracker API")
-
 # --import configs--
 
 KEY = ""
@@ -136,6 +136,25 @@ def catch_all(path):
         return 'what are you doing little hacker?'
     return 'Not found'
 
+@app.route('/updateUser', methods=['POST'])
+def updateUser():
+    data = request.get_json()
+    key = data['key']
+    token = data['token']
+    subject = data['subject']
+    flag = data['flag']
+    if key != KEY:
+        return jsonify({'result': 'Invalid key'})
+
+    if flag == 'true':
+        flag = True
+    else:
+        flag = False
+    
+    db.update_data(token, subject, flag)
+    
+    return jsonify({'result': 'ok'})
+
 @app.errorhandler(404)
 def page_not_found(e):
     return 'Not found'
@@ -158,20 +177,6 @@ def getCurrent():
     subject = request.args.get('subject')
     stage = request.args.get('stage')
     return jsonify(find_data_current(schclass, subject, stage))
-
-@app.route('/updateUser', methods=['POST'])
-def updateUser():
-    api_key = request.body['key']
-    if api_key != KEY:
-        return 'Invalid key'
-
-    user_token = request.body['token']
-    subject = request.body['subject']
-    flag = request.body['flag']
-
-    db.update_data(user_token, subject, flag)
-
-    return 'ok'
 
 # --server startup--
 
