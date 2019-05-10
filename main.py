@@ -145,6 +145,7 @@ def updateUser():
     subject = data['subject']
     flag = data['flag']
     if key != KEY:
+        logging.info("Key was invalid. Skip it.")
         return jsonify({'result': 'Invalid key'})
 
     if flag == 'true':
@@ -153,6 +154,7 @@ def updateUser():
         flag = False
     
     db.update_data(token, subject, flag)
+    logging.info("Table was updated.")
     
     return jsonify({'result': 'ok'})
 
