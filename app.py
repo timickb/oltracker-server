@@ -9,7 +9,7 @@ import os
 import json
 import logging
 import config
-import functions
+import extractor
 
 # logger start
 if not os.path.exists("logs"):
@@ -28,7 +28,6 @@ except:
     logging.critical('File with API keys was not found, shutdown server')
     exit(0)
 logging.info("API key was loaded")
-
 
 
 # init database
@@ -81,14 +80,16 @@ def get():
     schclass = request.args.get('class')
     subject = request.args.get('subject')
     stage = request.args.get('stage')
-    return jsonify(functions.find_data_next(schclass, subject, stage))
+    data = extractor.extract_data_next(schclass, subject, stage)
+    return jsonify(data)
 
 @app.route('/getCurrent')
 def getCurrent():
     schclass = request.args.get('class')
     subject = request.args.get('subject')
     stage = request.args.get('stage')
-    return jsonify(functions.find_data_current(schclass, subject, stage))
+    data = extractor.extract_data_current(schclass, subject, stage)
+    return jsonify(data)
 
 # server startup
 logging.info("HTTP Server started")

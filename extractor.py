@@ -1,5 +1,6 @@
 import json
 import yaml
+import logging
 
 matches = None
 with open('parser/matches.yml', 'r', encoding='utf-8') as file:
@@ -10,7 +11,7 @@ with open('parser/matches.yml', 'r', encoding='utf-8') as file:
         logging.critical('Can not load matches.yml, shutdown server')
         exit(0)
 
-def find_data_next(schclass, subject, stage):
+def extract_data_next(schclass, subject, stage):
     result = []
     try:
         schclass = int(schclass)
@@ -46,7 +47,7 @@ def find_data_next(schclass, subject, stage):
 
     return result
 
-def find_data_current(schclass, subject, stage):
+def extract_data_current(schclass, subject, stage):
     result = []
     try:
         schclass = int(schclass)
