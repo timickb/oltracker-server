@@ -44,7 +44,7 @@ logging.info("Connected to database")
 # --HTTP server--
 logging.info("Starting HTTP server...")
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 @app.route('/updateUser', methods=['POST'])
 def updateUser():
