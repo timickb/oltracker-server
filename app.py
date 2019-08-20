@@ -46,14 +46,6 @@ logging.info("Starting HTTP server...")
 
 app = Flask(__name__)
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    # just protection
-    if 'php' in request.url:
-        return 'what are you doing little hacker?'
-    return 'Not found'
-
 @app.route('/updateUser', methods=['POST'])
 def updateUser():
     data = request.get_json()
