@@ -69,7 +69,7 @@ def updateUser():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return 'Not found'
+    return render_template('404.html')
     
 @app.route('/')
 def info():
