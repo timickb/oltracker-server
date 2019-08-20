@@ -22,7 +22,18 @@ class OlympiadaRu():
         self.TYPES = matches['types-olru']
     
     def handle_event(self, row):
-        result = {}
+        result = {
+            'title': 'Title',
+            'stage': 'selection',
+            'subjects': [],
+            'id': -1,
+            'infourl': None,
+            'date_start': '01.01.1970',
+            'date_end': '01.01.1970',
+            'classes': [0],
+            'link': None
+        }
+        
         link_raw = row.find_all('td')[1].find('a')
         url = self.SERVER + link_raw['href']
         result['title'] = link_raw.text
