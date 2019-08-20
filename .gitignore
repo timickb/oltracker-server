@@ -99,8 +99,12 @@ celerybeat-schedule
 # Environments
 .env
 .venv
+.include
+.bin
 env/
 venv/
+bin/
+include/
 ENV/
 env.bak/
 venv.bak/
@@ -129,6 +133,9 @@ example.json
 database_next.json
 database_current.json
 database_users.json
+parser/database_next.json
+parser/database_current.json
+parser/database_users.json
 banned_ips.json
 test.py
 keys.json
