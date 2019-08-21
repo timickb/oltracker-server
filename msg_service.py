@@ -2,6 +2,7 @@ import requests
 import json
 import yaml
 import logging
+import os.path
 from database import Database
 
 class MessagingService():
@@ -15,15 +16,8 @@ class MessagingService():
         except:
             raise
         
-        self.config = None
-        with open('config.yml', 'r') as file:
-            try:
-                self.config = yaml.load(file)
-            except:
-                raise
-        
         self.matches = None
-        with open('matches.yml', 'r') as file:
+        with open(os.path.dirname(__file__) + '../matches.yml', 'r') as file:
             try:
                 self.matches = yaml.load(file)
             except:
@@ -49,7 +43,7 @@ class MessagingService():
             'to': user_token,
             'notification': {
                 'body': data,
-                'title': self.config['notification_title']
+                'title': 'New event'
             }
         }
         headers = {

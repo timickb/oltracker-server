@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     logging.info("Starting Updater")
 
-    with open('matches.yml', 'r', encoding='utf-8') as file:
+    with open(os.path.dirname(__file__) + '../matches.yml', 'r', encoding='utf-8') as file:
         try:
             matches = yaml.load(file, Loader=yaml.SafeLoader)
         except:
