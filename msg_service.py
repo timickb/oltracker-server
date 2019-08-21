@@ -17,7 +17,7 @@ class MessagingService():
             raise
         
         self.matches = None
-        with open(os.path.dirname(__file__) + '../matches.yml', 'r') as file:
+        with open('matches.yml', 'r') as file:
             try:
                 self.matches = yaml.load(file)
             except:
