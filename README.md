@@ -2,10 +2,10 @@
 API для получения информации об олимпиадах и других мероприятий для школьников в виде JSON объектов.
 
 ## Получить список предстоящих событий
-```http://94.103.83.68/getNext?class={class}&subject={subject}&stage={stage}```
+```/getNext?class={class}&subject={subject}&stage={stage}```
 
 ## Получить список текущих событий
-```http://94.103.83.68/getCurrent?class={class}&subject={subject}&stage={stage}```
+```/getCurrent?class={class}&subject={subject}&stage={stage}```
 
 | Параметр запроса | Описание |
 | ------------- | ------------------------------ |
